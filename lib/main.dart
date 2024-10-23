@@ -90,11 +90,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
             label: 'Drop-off',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
+            icon: Icon(Icons.calendar_month_rounded),
             label: 'Schedule',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.emoji_events),
+            icon: Icon(Icons.emoji_events_outlined),
             label: 'Awards',
           ),
           BottomNavigationBarItem(

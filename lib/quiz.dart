@@ -42,7 +42,7 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: SingleChildScrollView( //see this link: https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMJVZvPz8a-phtL-CS9-DaD-md_QColwbxbjN4N79MqFOhBFMgvm3eAaAu6pEALw_wcB&gclsrc=aw.ds
         child: Stack(
           children: [
             Container(
@@ -68,6 +68,7 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
     );
   }
 
+//to make the path the levels follow
   Widget _buildLevelsPath() {
     return Stack(
       children: List.generate(levels.length, (index) {
@@ -124,7 +125,7 @@ class LevelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return GestureDetector( //here: https://api.flutter.dev/flutter/widgets/GestureDetector-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMLEqRmPB6iZQgKY30T_-Cl2qjqpjmC8v63wEBxuddoV8DVyvjPUzuMaAlpbEALw_wcB&gclsrc=aw.ds
       onTap: onTap,
       child: Container(
         width: 60,
