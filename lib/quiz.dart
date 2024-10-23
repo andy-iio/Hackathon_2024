@@ -23,7 +23,7 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
       backgroundColor: const Color(0xFFF0F4F7),
       appBar: AppBar(
         title: const Text('E-Waste Duolingo'), //header title
-        backgroundColor: const Color.fromARGB(255, 246, 159, 221), //header colour
+        //backgroundColor: const Color.fromARGB(255, 246, 159, 221), //header colour
         actions: [
           ValueListenableBuilder<int>(
             valueListenable: widget.userPoints,

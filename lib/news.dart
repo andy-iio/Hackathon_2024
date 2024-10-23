@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-class DropoffPage extends StatelessWidget {
-  const DropoffPage({super.key});
+class NewsPage extends StatelessWidget {
+  const NewsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dropoff'),
+        title: const Text('News'),
       ),
       body: Center(
         child: const Text(
-          'Here is the dropoff page!',
+          'Here is the news page! (im working on it now)',
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,

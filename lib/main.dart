@@ -6,6 +6,7 @@ import 'dropoff.dart'; //find dropoff locations, through googlemaps api
 import 'collection.dart'; //the ewaste collection schedule
 import 'profile.dart'; //we could have a stats page too to say like you saved x amt of ewaste from going into the environment based on how many times they dropped stuff off?
 import 'quiz.dart'; //main quiz page like duolingo
+import 'news.dart'; //news articles and stuff
 
 //FLUTTER KEYWORDS & STUFF TO KNOW
 //late: will be assigned later
@@ -19,20 +20,35 @@ void main() {
 class EWasteApp extends StatelessWidget {
   const EWasteApp({super.key});
 
+//!!!!!!!!!!!!!!!!!!!!!
+//THEME FOR OVERALL APP!
+//more info here: https://docs.flutter.dev/cookbook/design/themes?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMLW8BF8ezkmhM_R31ptPvqpAkU5dBEtcyZHJgRselT3uB-2T_J2E1AaAhUEEALw_wcB&gclsrc=aw.ds
+//there is a way to use google fonts but idk how yet
+//!!!!!!!!!!!!!!!!!!!!!
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E-Waste Duolingo',
+      title: 'E-Waste Duolingo', //we need to come up with a name 
       theme: ThemeData(
-        primarySwatch: Colors.pink, //main colour scheme of the app elements
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green), //main colour scheme of the app elements
         scaffoldBackgroundColor: Colors.white, // background colour
+        textTheme: TextTheme(
+        titleLarge: const TextStyle( //used in main topbar headings 
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+          ),
+        headlineSmall: const TextStyle( //used in questions for quiz 
+          fontSize: 28, 
+          ),
+        ),
       ),
       home: const BottomNavigation(), 
     );
   }
 }
 
-//main bottom navigation
+//main bottom navigation menu
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
 
@@ -54,6 +70,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       QuizPathScreen(userPoints: userPoints), //the quiz levels 
       const DropoffPage(),
       const CollectionPage(),
+      NewsPage(),
       AwardsPage(userPoints: userPoints),
       const ProfilePage(),
     ];
@@ -92,6 +109,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_month_rounded),
             label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.newspaper_rounded),
+            label: 'News',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.emoji_events_outlined),

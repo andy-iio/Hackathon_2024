@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CollectionPage extends StatelessWidget {
-  const CollectionPage({Key? key}) : super(key: key);
+  const CollectionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
