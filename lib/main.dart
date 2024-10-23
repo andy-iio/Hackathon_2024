@@ -14,6 +14,7 @@ import 'news.dart'; //news articles and stuff
 //super.xxx: refers to the superclass of the current class
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized(); //makes sure the webview gets initalized (used for newspage)
   runApp(const EWasteApp());
 }
 
