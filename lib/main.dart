@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 //all the pages of our app
-import 'quiz.dart'; //main quiz page like duolingo
 import 'awards.dart'; //awards that can be unlocked through playing
 import 'dropoff.dart'; //find dropoff locations, through googlemaps api
 import 'collection.dart'; //the ewaste collection schedule
 import 'profile.dart'; //we could have a stats page too to say like you saved x amt of ewaste from going into the environment based on how many times they dropped stuff off?
+import 'quiz.dart'; //main quiz page like duolingo
 
 //FLUTTER KEYWORDS & STUFF TO KNOW
 //late: will be assigned later
@@ -42,7 +42,7 @@ class BottomNavigation extends StatefulWidget {
 
 class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedPage = 0; //tracks the current page that is selected
-  final userPoints = ValueNotifier<int>(0); //ValueNotifier holds 1 int value and lets you listen to changes to that value, for when they get more points in a quiz
+  final ValueNotifier<int> userPoints = ValueNotifier<int>(0); //ValueNotifier holds 1 int value and lets you listen to changes to that value, for when they get more points in a quiz
   //its using the final keyword so that the same instance of valuenotifier is used, the points can still be changed 
   late final List<Widget> _pages; 
 
@@ -51,12 +51,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
     super.initState();
     //dont change the order of these pages without also changing the icons and labels order below
     _pages = [
-      LevelsPage(userPoints: userPoints), //the quiz levels 
+      QuizPathScreen(userPoints: userPoints), //the quiz levels 
       const DropoffPage(),
       const CollectionPage(),
       AwardsPage(userPoints: userPoints),
       const ProfilePage(),
     ];
+  }
+  @override //was getting weird issues when not using dispose 
+  void dispose() {
+    userPoints.dispose();
+    super.dispose();
   }
 
   @override

@@ -1,156 +1,35 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'levels.dart';
 
-//maybe the classes should be in their own file idk 
-class Level {
-  final int id;
-  final String title;
-  final String article;
-  final List<Quiz> quizzes;
-  final int pointsToUnlock;
-  bool isUnlocked;
-  bool isCompleted;
-
-  Level({
-    required this.id,
-    required this.title,
-    required this.article,
-    required this.quizzes,
-    required this.pointsToUnlock,
-    this.isUnlocked = false,
-    this.isCompleted = false,
-  });
-}
-
-class Quiz {
-  final String question;
-  final List<String> options;
-  final int correctAnswer;
-  bool isAnswered;
-  bool isCorrect;
-
-  Quiz({
-    required this.question,
-    required this.options,
-    required this.correctAnswer,
-    this.isAnswered = false,
-    this.isCorrect = false,
-  });
-}
-
-//main page 
-class LevelsPage extends StatelessWidget {
+class QuizPathScreen extends StatefulWidget {
   final ValueNotifier<int> userPoints;
-  final List<Level> levels = [
-    Level(
-      id: 1,
-      title: 'Introduction to E-Waste',
-      article: '''article/ video/ infographic here ''',
-      quizzes: [
-        Quiz(
-          question: 'What is e-waste?',
-          options: [
-            'Food waste',
-            'Electronic waste',
-            'Paper waste',
-            'Plastic waste'
-          ],
-          correctAnswer: 1,
-        ),
-        Quiz(
-          question: 'Which of these is e-waste?',
-          options: [
-            'Newspaper',
-            'Broken phone',
-            'Food',
-            'Clothes'
-          ],
-          correctAnswer: 1,
-        ),
-        Quiz(
-          question: 'Why is proper e-waste disposal important?',
-          options: [
-            'Answer 1',
-            'It prevents harmful materials from entering the environment',
-            'Another answer',
-            'Another other answer'
-          ],
-          correctAnswer: 1,
-        ),
-      ],
-      pointsToUnlock: 0,
-      isUnlocked: true,
-    ),
-    Level(
-      id: 2,
-      title: 'Environmental Impact',
-      article: '''article here''',
-      quizzes: [
-        Quiz(
-          question: 'What harmful substance is found in ewaste?',
-          options: [
-            '0',
-            '1',
-            'Lead',
-            '3'
-          ],
-          correctAnswer: 2,
-        ),
-        Quiz(
-          question: 'How does bad e-waste disposal affect the environment?',
-          options: [
-            'correct answer',
-            '1',
-            '2',
-            '3'
-          ],
-          correctAnswer: 0,
-        ),
-      ],
-      pointsToUnlock: 20,
-    ),
-    Level(
-      id: 3,
-      title: 'Recycling Benefits',
-      article: '''article here''',
-      quizzes: [
-        Quiz(
-          question: 'q1?',
-          options: [
-            '1',
-            'right answer',
-            '3',
-            '4'
-          ],
-          correctAnswer: 1,
-        ),
-        Quiz(
-          question: 'q2?',
-          options: [
-            '0',
-            '1',
-            'right answer',
-            '3'
-          ],
-          correctAnswer: 2,
-        ),
-      ],
-      pointsToUnlock: 40,
-    ),
-  ];
 
-  LevelsPage({super.key, required this.userPoints});
+  const QuizPathScreen({
+    super.key,
+    required this.userPoints,
+  });
+
+
+  @override
+  State<QuizPathScreen> createState() => _QuizPathScreenState();
+}
+
+class _QuizPathScreenState extends State<QuizPathScreen> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF0F4F7),
       appBar: AppBar(
-        title: const Text('E-Waste Duolingo'),
+        title: const Text('E-Waste Duolingo'), //header title
+        backgroundColor: const Color.fromARGB(255, 246, 159, 221), //header colour
         actions: [
           ValueListenableBuilder<int>(
-            valueListenable: userPoints,
+            valueListenable: widget.userPoints,
             builder: (context, points, child) {
               return Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0), //can change the padding to make it look better
                 child: Row(
                   children: [
                     const Icon(Icons.stars),
@@ -163,46 +42,81 @@ class LevelsPage extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: levels.length,
-        itemBuilder: (context, index) {
-          final level = levels[index];
-          return LevelCard(
-            level: level,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width, //just keeping the og width for now
+              height: 2000, //looks best on my screen at 2000 but if we test on an actual phone this probs needs to change
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/images/download.jpg'), //we gotta change the bg image it looks kinda weird 
+                  repeat: ImageRepeat.repeatY,
+                  fit: BoxFit.fitWidth, //theres other options for fit to try we can check which is best 
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              width: MediaQuery.of(context).size.width,
+              height: 1200,
+              child: _buildLevelsPath(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLevelsPath() {
+    return Stack(
+      children: List.generate(levels.length, (index) {
+        final xOffset = sin(index * 0.5) * 50 + 150;  //the path of the q's, using sin for nice wavey-ness
+        final yOffset = index * 70.0 + 50; //i think using matlab and making a path based on our background is the best way to model this
+
+        return Positioned(
+          left: xOffset,
+          top: yOffset,
+          child: LevelButton(
+            level: levels[index],
             onTap: () {
-              if (level.isUnlocked) {
+              if (levels[index].isUnlocked) {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => LevelPage(
-                      level: level,
+                      level: levels[index],
                       onComplete: (points) {
-                        userPoints.value += points;
-                        level.isCompleted = true;
-                        //unlock next level
-                        if (index + 1 < levels.length &&
-                            userPoints.value >= levels[index + 1].pointsToUnlock) {
-                          levels[index + 1].isUnlocked = true;
-                        }
+                        setState(() {
+                          widget.userPoints.value += points;
+                          levels[index].isCompleted = true;
+                          //stars based on points (1 right q = 1 star) ** based on 2 q;s per level - i think we could make this dynamic so it checks how many q's in the level but im tired lol
+                          levels[index].score = (points / 20 * 3).round();
+                          
+                          //unlock next level if they have enough points
+                          if (index + 1 < levels.length &&
+                              widget.userPoints.value >= levels[index + 1].pointsToUnlock) {
+                            levels[index + 1].isUnlocked = true;
+                          }
+                        });
                       },
                     ),
                   ),
                 );
               }
             },
-          );
-        },
-      ),
+          ),
+        );
+      }),
     );
   }
 }
 
-
-class LevelCard extends StatelessWidget {
+class LevelButton extends StatelessWidget {
   final Level level;
   final VoidCallback onTap;
 
-  const LevelCard({
+  const LevelButton({
     super.key,
     required this.level,
     required this.onTap,
@@ -210,44 +124,66 @@ class LevelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.fromLTRB(20, 7, 20, 7), //margin around the level cards
-      child: ListTile(
-        leading: CircleAvatar( //the circle that tells you the lvel number
-          backgroundColor: level.isCompleted
-              ? Colors.green //green when completed
-              : level.isUnlocked
-                  ? const Color.fromARGB(255, 209, 155, 242) //purple when unlocked but not yet finished
-                  : Colors.grey, //grey when not unlocked yet
-          child: Text(level.id.toString()),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 60,
+        height: 60,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: !level.isUnlocked ? Colors.grey : Colors.white, //when locked circle colours
+          border: Border.all(
+            color: level.isCompleted 
+                ? Colors.green 
+                : level.isUnlocked 
+                    ? const Color.fromARGB(255, 226, 149, 241) //unlocked but not yet completed
+                    : Colors.grey.shade600,
+            width: 3,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26, //to make it stand out against the bg
+              offset: const Offset(0, 2),
+              blurRadius: 6, //can be made bigger
+            ),
+          ],
         ),
-        title: Text(level.title),
-        subtitle: Text(
-          level.isCompleted
-              ? 'Completed!'
-              : level.isUnlocked
-                  ? 'Tap to start'
-                  : '${level.pointsToUnlock} points needed to unlock',
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${level.id}',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: !level.isUnlocked 
+                      ? Colors.white
+                      : level.isCompleted 
+                          ? Colors.green 
+                          : const Color.fromARGB(255, 226, 149, 241) ,
+                ),
+              ),
+              if (level.score > 0)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    3,
+                    (index) => Icon(
+                      index < level.score ? Icons.star : Icons.star_border, //i love the icons so fun
+                      size: 12,
+                      color: const Color.fromARGB(255, 254, 202, 45),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
-        trailing: Icon(
-          level.isCompleted
-              ? Icons.check_circle
-              : level.isUnlocked
-                  ? Icons.play_circle
-                  : Icons.lock,
-          color: level.isCompleted //the colour of the play button/lock button when completed/not completed/unlocked
-              ? Colors.green
-              : level.isUnlocked
-                  ? const Color.fromARGB(255, 209, 155, 242)
-                  : Colors.grey,
-        ),
-        onTap: level.isUnlocked ? onTap : null,
       ),
     );
   }
 }
 
-//level page
 class LevelPage extends StatefulWidget {
   final Level level;
   final Function(int points) onComplete;
@@ -271,7 +207,7 @@ class _LevelPageState extends State<LevelPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Level ${widget.level.id}'),
+        title: Text('Level ${widget.level.id}: ${widget.level.title}'),
       ),
       body: showingArticle ? _buildArticleView() : _buildQuizView(),
     );
@@ -343,13 +279,12 @@ class _LevelPageState extends State<LevelPage> {
                           }
                         });
 
-                        //show if correct or incorrect
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          SnackBar( //cool name,, this is the little dialouge at the bottom of the screen
                             content: Text(
                               quiz.isCorrect ? 'Correct! +10 points' : 'Incorrect',
                             ),
-                            duration: const Duration(seconds: 1),
+                            duration: const Duration(seconds: 1), //go away after 1 sec
                           ),
                         );
 
@@ -370,9 +305,7 @@ class _LevelPageState extends State<LevelPage> {
                   backgroundColor: quiz.isAnswered
                       ? index == quiz.correctAnswer
                           ? Colors.green
-                          : index == quiz.correctAnswer
-                              ? Colors.red
-                              : null
+                          : Colors.red
                       : null,
                 ),
                 child: Text(quiz.options[index]),
