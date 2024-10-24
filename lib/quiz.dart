@@ -22,7 +22,7 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFF0F4F7),
       appBar: AppBar(
-        title: const Text('E-Waste Duolingo'), //header title
+        title: const Text('Learning Path'), //header title
         //backgroundColor: const Color.fromARGB(255, 246, 159, 221), //header colour
         actions: [
           ValueListenableBuilder<int>(
@@ -42,22 +42,59 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
           ),
         ],
       ),
+
+
       body: SingleChildScrollView( //see this link: https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMJVZvPz8a-phtL-CS9-DaD-md_QColwbxbjN4N79MqFOhBFMgvm3eAaAu6pEALw_wcB&gclsrc=aw.ds
         child: Stack(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width, //just keeping the og width for now
-              height: 2000, //looks best on my screen at 2000 but if we test on an actual phone this probs needs to change
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/download.jpg'), //we gotta change the bg image it looks kinda weird 
-                  repeat: ImageRepeat.repeatY,
-                  fit: BoxFit.fitWidth, //theres other options for fit to try we can check which is best 
+          children: [ 
+                         
+            //FOR THE  BACKGROUND IMAGE 
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/bg.png',
+                fit: BoxFit.cover,
+                repeat: ImageRepeat.repeatY,
+              ),
+            ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width, //just keeping the og width for now
+            //   height: 2000, //looks best on my screen at 2000 but if we test on an actual phone this probs needs to change
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //       image: AssetImage('assets/images/bg.png'), //we gotta change the bg image it looks kinda weird 
+            //       repeat: ImageRepeat.repeatY,
+            //       fit: BoxFit.fitWidth, //theres other options for fit to try we can check which is best 
+            //     ),
+            //   ),
+            // ),
+
+            Positioned(
+              top: 40,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Text(
+                  'Start Your Path to E-Waste Education!',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        offset: Offset(4.0, 4.0),
+                        blurRadius: 7.0,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
+
+            //FOR THE LEVELS PATH
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 70),
               width: MediaQuery.of(context).size.width,
               height: 1200,
               child: _buildLevelsPath(),
@@ -72,8 +109,8 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
   Widget _buildLevelsPath() {
     return Stack(
       children: List.generate(levels.length, (index) {
-        final xOffset = sin(index * 0.5) * 50 + 150;  //the path of the q's, using sin for nice wavey-ness
-        final yOffset = index * 70.0 + 50; //i think using matlab and making a path based on our background is the best way to model this
+        final xOffset = sin(index * 0.9) * 50 + 150;  //the path of the q's, using sin for nice wavey-ness
+        final yOffset = index * 66.0 + 50; //i think using matlab and making a path based on our background is the best way to model this
 
         return Positioned(
           left: xOffset,
@@ -143,8 +180,8 @@ class LevelButton extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26, //to make it stand out against the bg
-              offset: const Offset(0, 2),
+              color: const Color.fromARGB(162, 255, 255, 255), //to make it stand out against the bg
+              offset: const Offset(4, 4),
               blurRadius: 6, //can be made bigger
             ),
           ],
@@ -214,34 +251,32 @@ class _LevelPageState extends State<LevelPage> {
     );
   }
 
-  Widget _buildArticleView() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            widget.level.title,
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
-          const SizedBox(height: 16),
-          Text(
-            widget.level.article,
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                showingArticle = false;
-              });
-            },
-            child: const Text('Start Quiz'),
-          ),
-        ],
-      ),
-    );
-  }
+ Widget _buildArticleView() {
+  return SingleChildScrollView(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          widget.level.title,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
+        const SizedBox(height: 16),
+        ...widget.level.article, //... is called the spread operator,, to add all widgets
+        const SizedBox(height: 24),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              showingArticle = false; //quiz view
+            });
+          },
+          child: const Text('Start Quiz'),
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildQuizView() {
     final quiz = widget.level.quizzes[currentQuizIndex];

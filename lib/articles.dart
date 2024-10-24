@@ -51,7 +51,7 @@ final List<NewsArticle> allArticles = [
         NewsArticle(
       title: 'Royal Mint mines gold from e-waste',
       description: 'The Royal Mint is pioneering a sustainable approach by mining e-waste to recover precious metals.',
-      imageUrl: 'assets/images/article5.png',
+      imageUrl: 'assets/images/article5.jpg',
       date: '2024-08-29',
       source: 'Canadian Coin News',
     ),

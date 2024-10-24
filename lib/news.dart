@@ -18,6 +18,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
+    _displayedArticles = allArticles.take(3).toList(); 
     _updateDisplayedArticles();
   }
 
