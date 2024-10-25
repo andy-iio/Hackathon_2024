@@ -27,7 +27,7 @@ class Level {
     required this.modules,
     required this.quizzes,
     required this.pointsToUnlock,
-    this.isUnlocked = true, //CHANGE TO FALSE AFTER DONE FIXING ARTICLES
+    this.isUnlocked = false, //CHANGE TO FALSE AFTER DONE FIXING ARTICLES
     this.isCompleted = false,
     this.score = 0,
   });
@@ -111,8 +111,8 @@ final List<Level> levels = [
       Module(
         title: 'Introduction to E-Waste',
         content:
-            'E-waste refers to all items of electrical and electronic equipment (EEE) and its parts that have been discarded as waste without the intent of re-use. [STeP Initiative 2014] EEE plays an important role in improving living standards and creating income opportunities. However, growing amounts of EEE, mainly due to higher consumption and short life cycles, are generating hazardous waste streams. In 2019, just 17.4% of e-waste generated globally was collected and recycled. Africa had the lowest rate, with just 0.9% of its 2.9 Mt of e-waste recycled. Just 13 countries in Africa have a national e-waste legislation/policy or regulation in place. [Global E-waste Monitor 2020]',
-        imagePath: 'assets/images/infographics.png',      
+            'E-waste refers to all items of electrical and electronic equipment (EEE) and its parts that have been discarded as waste without the intent of re-use. EEE plays an important role in improving living standards and creating income opportunities. However, growing amounts of EEE, mainly due to higher consumption and short life cycles, are generating hazardous waste streams. In 2019, just 17.4% of e-waste generated globally was collected and recycled. Africa had the lowest rate, with just 0.9% of its 2.9 Mt of e-waste recycled. Just 13 countries in Africa have a national e-waste legislation/policy or regulation in place.',
+        imagePath: 'assets/images/infographics.jpg',      
       ),
       Module(
         title: 'Types of E-Waste',
