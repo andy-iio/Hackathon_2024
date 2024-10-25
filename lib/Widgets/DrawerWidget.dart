@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../profile.dart';
+import '../myPickups.dart'; // Importing MyPickups page
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -7,105 +9,131 @@ class DrawerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        children: const [
-          DrawerHeader(
+        children: [
+          const DrawerHeader(
             padding: EdgeInsets.zero,
             child: UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.green,
               ),
               accountName: Text(
-                "Raymond Clark",
+                "Mary Jones",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               accountEmail: Text(
-                "raymond@gmail.com",
+                "maryjones@gmail.com",
                 style: TextStyle(
                   fontSize: 15,
                 ),
               ),
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage("lib/images/user.png"),
+                backgroundImage: AssetImage('assets/images/user3.png'),
               ),
             ),
           ),
 
-          // List Tile Home
+          // List Tile for Home
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.home,
-              color: Colors.red,
+              color: Colors.green,
             ),
-            title: Text(
+            title: const Text(
               "Home",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            onTap: () {
+              Navigator.pop(
+                  context); // Close the drawer and stay on the HomePage
+            },
           ),
 
-          // List Tile My Account
+          // List Tile for My Account (Navigating to Profile Page)
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.person,
-              color: Colors.red,
+              color: Colors.green,
             ),
-            title: Text(
+            title: const Text(
               "My Account",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProfilePage(),
+                ),
+              );
+            },
           ),
 
-          // List Tile Settings
+          // List Tile for Settings
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.settings,
-              color: Colors.red,
+              color: Colors.green,
             ),
-            title: Text(
+            title: const Text(
               "Settings",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            onTap: () {
+              // Navigation to Settings page can be implemented here
+            },
           ),
 
-          // List Tile Help & Support
+          // List Tile for My Pickup (Navigating to MyPickups page)
           ListTile(
-            leading: Icon(
-              Icons.help,
-              color: Colors.red,
+            leading: const Icon(
+              Icons.recycling,
+              color: Colors.green,
             ),
-            title: Text(
-              "Help & Support",
+            title: const Text(
+              "My Pickup",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyPickups(),
+                ),
+              );
+            },
           ),
 
-          // List Tile Log Out
+          // List Tile for Log Out
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.exit_to_app,
-              color: Colors.red,
+              color: Colors.green,
             ),
-            title: Text(
+            title: const Text(
               "Log Out",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            onTap: () {
+              // Log Out functionality can be implemented here
+            },
           ),
         ],
       ),

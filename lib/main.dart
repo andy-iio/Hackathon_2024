@@ -5,6 +5,8 @@ import 'bottomNav.dart';
 //final: it can only be assigned once and can't be changed (like const?)
 //super.xxx: refers to the superclass of the current class
 
+List<Map<String, dynamic>> pickupList = []; // For pickup list
+
 void main() {
   runApp(const EWasteApp());
 }

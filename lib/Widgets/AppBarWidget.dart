@@ -7,7 +7,7 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        vertical: 7,
+        vertical: 15, //7
         horizontal: 15,
       ),
       child: Row(
@@ -18,7 +18,7 @@ class AppBarWidget extends StatelessWidget {
               Scaffold.of(context).openDrawer();
             },
             child: Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(5), //8
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -31,11 +31,12 @@ class AppBarWidget extends StatelessWidget {
                   )
                 ],
               ),
-              child: const Icon(Icons.person),
+              child: const Icon(Icons.menu),
             ),
           ),
-          
-         /* InkWell(
+
+          // Notification icon
+          /* InkWell( 
             onTap: () {},
             child: Container(
               padding: const EdgeInsets.all(8),
