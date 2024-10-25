@@ -237,9 +237,11 @@ class LevelPage extends StatefulWidget {
 }
 
 class _LevelPageState extends State<LevelPage> {
-  bool showingArticle = true;
+  bool showingModules = true;
+  bool showingQuiz = false;
   int currentQuizIndex = 0;
   int points = 0;
+  int? selectedModuleIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -247,35 +249,132 @@ class _LevelPageState extends State<LevelPage> {
       appBar: AppBar(
         title: Text('Level ${widget.level.id}: ${widget.level.title}'),
       ),
-      body: showingArticle ? _buildArticleView() : _buildQuizView(),
+      body: showingQuiz 
+          ? _buildQuizView() 
+          : (selectedModuleIndex != null 
+              ? _buildModuleContent() 
+              : _buildModulesView()),
+    );
+  }
+Widget _buildModulesView() {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Complete all modules to unlock the quiz',
+            style: Theme.of(context).textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          ...List.generate(
+            widget.level.modules.length,
+            (index) => Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: Card(
+                child: ListTile(
+                  leading: Icon(
+                    widget.level.modules[index].isCompleted
+                        ? Icons.check_circle
+                        : Icons.circle_outlined,
+                    color: widget.level.modules[index].isCompleted
+                        ? Colors.green
+                        : Colors.grey,
+                  ),
+                  title: Text('Module ${index + 1}: ${widget.level.modules[index].title}'),
+                  onTap: () {
+                    setState(() {
+                      selectedModuleIndex = index;
+                    });
+                  },
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: widget.level.allModulesCompleted
+                ? () {
+                    setState(() {
+                      showingQuiz = true;
+                    });
+                  }
+                : null,
+            child: Text(
+              widget.level.allModulesCompleted
+                  ? 'Start Quiz'
+                  : 'Complete all modules to unlock quiz'
+            ),
+          ),
+        ],
+      ),
     );
   }
 
- Widget _buildArticleView() {
-  return SingleChildScrollView(
-    padding: const EdgeInsets.all(25.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(
-          widget.level.title,
-          style: Theme.of(context).textTheme.headlineMedium,
-        ),
-        const SizedBox(height: 16),
-        ...widget.level.article, //... is called the spread operator,, to add all widgets
-        const SizedBox(height: 24),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              showingArticle = false; //quiz view
-            });
-          },
-          child: const Text('Start Quiz'),
-        ),
-      ],
-    ),
-  );
-}
+  Widget _buildModuleContent() {
+    final module = widget.level.modules[selectedModuleIndex!];
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Module ${selectedModuleIndex! + 1}: ${module.title}',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(height: 24),
+          Text(
+            module.content,
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                widget.level.modules[selectedModuleIndex!].isCompleted = true;
+                selectedModuleIndex = null;
+              });
+            },
+            child: const Text('Mark as Complete'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                selectedModuleIndex = null;
+              });
+            },
+            child: const Text('Back to Modules'),
+          ),
+        ],
+      ),
+    );
+  }
+//  Widget _buildArticleView() {
+//   return SingleChildScrollView(
+//     padding: const EdgeInsets.all(25.0),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.stretch,
+//       children: [
+//         Text(
+//           widget.level.title,
+//           style: Theme.of(context).textTheme.headlineMedium,
+//         ),
+//         const SizedBox(height: 16),
+//         ...widget.level.article, //... is called the spread operator,, to add all widgets
+//         const SizedBox(height: 24),
+//         ElevatedButton(
+//           onPressed: () {
+//             setState(() {
+//               showingArticle = false; //quiz view
+//             });
+//           },
+//           child: const Text('Start Quiz'),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 
   Widget _buildQuizView() {
