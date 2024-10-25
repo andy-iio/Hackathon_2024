@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+
+class Module {
+  final String content;
+  bool isCompleted;
+
+  Module({required this.content, this.isCompleted = false});
+}
+
 class Level {
   final int id;
   final String title;
@@ -16,7 +24,7 @@ class Level {
     required this.article,
     required this.quizzes,
     required this.pointsToUnlock,
-    this.isUnlocked = false,
+    this.isUnlocked = true, //CHANGE TO FALSE AFTER DONE FIXING ARTICLES
     this.isCompleted = false,
     this.score = 0,
   });
@@ -55,14 +63,23 @@ final List<Level> levels = [
       Image.asset('assets/images/article1.png'),
       SizedBox(height: 10),
       Text(
-        'Common items in e-waste streams include computers, mobile phones, large household appliances, and medical equipment. Millions of tonnes of e-waste are recycled using unsound activities, as well as being stored in homes and warehouses, dumped, and illegally exported. When e-waste is recycled using unsound activities, it can release up to 1000 different chemical substances into the environment, including known neurotoxicants such as lead. Pregnant women and children are particularly vulnerable due to their pathways of exposure and developmental status. The International Labour Organization (ILO) estimates that 16.5 million children were working in the industrial sector in 2020, of which waste processing is a subsector.',
+        'Common e-waste items include:\n'
+        '- computers\n'
+        '- mobile phones\n'
+        '- large household appliances\n'
+        '- and medical equipment\n\n'
+        'Millions of tonnes of e-waste are recycled using unsound activities, as well as being stored in homes and warehouses, dumped, and illegally exported.\n'
+        'When e-waste is recycled using unsound activities, it can release up to 1000 different chemical substances into the environment, including known neurotoxicants such as lead.',
         style: TextStyle(fontSize: 16),
       ),
       SizedBox(height: 10),
       Image.asset('assets/images/article2.jpg'),
       SizedBox(height: 10),
       Text(
-        'Scope of the problem:\n'
+        'Scope of the problem:\n',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      Text(
         'Electronic waste (e-waste) is one of the fastest growing solid waste streams in the world. Less than a quarter of e-waste produced globally in 2022 was known to be formally recycled; however, e-waste streams contain valuable and finite resources that can be reused if they are recycled appropriately. E-waste has therefore become an important income stream for individuals and some communities. People living in low- and middle-income (LMICs), particularly children, face the most significant risks from e-waste due to lack of appropriate regulations and enforcement, recycling infrastructure and training. Despite international regulations targeting the control of the transport of e-waste from one country to another, its transboundary movement to LMICs continues, frequently illegally. E-waste is considered hazardous waste as it contains toxic materials and can produce toxic chemicals when recycled inappropriately. Many of these toxic materials are known or suspected to cause harm to human health, and several are included in the 10 chemicals of public health concern, including dioxins, lead, and mercury. Inferior recycling of e-waste is a threat to public health and safety.',
         style: TextStyle(fontSize: 16),
       ),
@@ -95,56 +112,116 @@ final List<Level> levels = [
       ),
       Quiz(
         question: 'Which of these is considered e-waste?',
-        options: [
-          'Newspaper',
-          'Broken phone',
-          'Food',
-          'Clothes',
-        ],
+        options: ['Newspaper','Broken phone','Food','Clothes'],
         correctAnswer: 1,
       ),
+
     ],
     pointsToUnlock: 0,
     isUnlocked: true,
   ),
   Level(
     id: 2,
+    //source: https://wasteaid.org/wp-content/uploads/2022/06/e-Waste_Introduction-1.pdf 
     title: 'Environmental Impact',
     article: [
-    ],
+      Text(
+      'Introduction\n'
+      'Electronic waste, also known as e-waste, is any electronic product, or product containing electronic components, that has reached the end of its usable life cycle. Unbeknownst to many consumers, electronics actually contain toxic substances - therefore they must be handled with care when no longer wanted or needed. If a product is outdated, consumers can donate it to someone who might still find it valuable. Many retailers also offer trade-in programs or incentives for people looking to upgrade electronics that require the surrender of an older model; the retailers are able to reuse or repurpose the older models. However, if a product is totally unusable or broken, instead of just being thrown in the garbage, it must be thrown away by a certified e-waste hauler or recycler, or taken to a designated drop-off at a government building, school or organization as e-waste can potentially cause harm to humans, animals and the global environment if disposed of improperly.\n'
+'The Negative Effects on Air'
+
+'Contamination in the air occurs when e-waste is informally disposed by dismantling, shredding or melting the materials, releasing dust particles or toxins, such as dioxins, into the environment that cause air pollution and damage respiratory health. E-waste of little value is often burned, but burning also serves a way to get valuable metal from electronics, like copper. Chronic diseases and cancers are at a higher risk to occur when burning e-waste because it also releases fine particles, which can travel thousands of miles, creating numerous negative health risks to humans and animals. Higher value materials, such as gold and silver, are often removed from highly integrated electronics by using acids, desoldering, and other chemicals, which also release fumes in areas where recycling is not regulated properly. The negative effects on air from informal e-waste recycling are most dangerous for those who handle this waste, but the pollution can extend thousands of miles away from recycling sites'
+'The negative effects on air'
+
+'When improper disposal of e-waste in regular landfills or in places where it is dumped illegally, both heavy metals and flame retardants can seep directly from the e-waste into the soil, causing contamination of underlying groundwater or contamination of crops that may be planted near by or in the area in the future. When the soil is contaminated by heavy metals, the crops become vulnerable to absorbing these toxins, which can cause many illnesses and doesn’t allow the farmland to be as productive as possible.'
+
+'The negative effects on water'
+'After soil contamination, heavy metals from e-waste, such as mercury, lithium, lead and barium, then leak through the earth even further to reach groundwater. When these heavy metals reach groundwater, they eventually make their way into ponds, streams, rivers and lakes. Through these pathways, acidification and toxification are created in the water, which is unsafe for animals, plants and communities even if they are miles away from a recycling site. Clean drinking water becomes problematic to find.'
+'The Negative Effects on Humans'
+
+'As mentioned, electronic waste contains toxic components that are dangerous to human health, such as mercury, lead, cadmium, polybrominated flame retardants, barium and lithium. The negative health effects of these toxins on humans include brain, heart, liver, kidney and skeletal system damage. It can also considerably affect the nervous and reproductive systems of the human body, leading to disease and birth defects. Improper disposal of e-waste is unbelievably dangerous to the global environment, which is why it is so important to spread awareness on this growing problem and the threatening aftermath. To avoid these toxic effects of e-waste, it is crucial to properly e-cycle, so that items can be recycled, refurbished, resold, or reused. The growing stream of e-waste will only worsen if not educated on the correct measures of disposal.'
+    )],
     quizzes: [
       Quiz(
-        question: 'What harmful substance is found in e-waste?',
+        question: 'According to the Global E-waste Monitor 2020, what percentage of e-waste generated globally was collected and recycled in 2019?',
         options: [
-          'Grass',
-          'Salt',
-          'Lead',
-          'Bread',
+          '25.6%',
+          '45.8%',
+          '17.4%',
+          '10.2%',
         ],
         correctAnswer: 2,
       ),
+      Quiz(
+        question: 'The UN categorizes electrical and electronic equipment (EEE) into 54 different product-centric categories.',
+        options: ['True', 'False'],
+        correctAnswer: 0,
+      ),
+      Quiz(
+        question: 'Which one of these is not part of the six general categories of electrical and electronic equipment (EEE) as classified by the UN?',
+        options: ['Temperature exchange equipment', 'Personal devices','Small IT & telecom equipment','Large equipment'],
+        correctAnswer: 1,
+      ),
+       Quiz(
+        question: 'Which of the following techniques is used in the waste-handling hierarchy?',
+        options: ['Prevention / avoidance','Excessive consumption','Ignoring recycling programs','Landfilling without sorting'],
+        correctAnswer: 0,
+      ),
+      Quiz(
+        question: 'E-waste management does not have a role in the transition from a linear economy to a circular economy.',
+        options: ['True', 'False'],
+        correctAnswer: 1,
+      ),
     ],
-    pointsToUnlock: 20,
+    pointsToUnlock: 20, 
   ),
   ...List.generate(18, (index) => Level(
     id: index + 3,
     title: 'Level ${index + 3}',
     article: [
-      Text('Placeholder article for level ${index + 3}'),
+      Text('Electronic waste, also known as e-waste, is any electronic product, or product containing electronic components, that has reached the end of its usable life cycle. Unbeknownst to many consumers, electronics actually contain toxic substances - therefore they must be handled with care when no longer wanted or needed. If a product is outdated, consumers can donate it to someone who might still find it valuable. Many retailers also offer trade-in programs or incentives for people looking to upgrade electronics that require the surrender of an older model; the retailers are able to reuse or repurpose the older models. However, if a product is totally unusable or broken, instead of just being thrown in the garbage, it must be thrown away by a certified e-waste hauler or recycler, or taken to a designated drop-off at a government building, school or organization as e-waste can potentially cause harm to humans, animals and the global environment if disposed of improperly.'
+'The Negative Effects on Air'
+
+'Contamination in the air occurs when e-waste is informally disposed by dismantling, shredding or melting the materials, releasing dust particles or toxins, such as dioxins, into the environment that cause air pollution and damage respiratory health. E-waste of little value is often burned, but burning also serves a way to get valuable metal from electronics, like copper. Chronic diseases and cancers are at a higher risk to occur when burning e-waste because it also releases fine particles, which can travel thousands of miles, creating numerous negative health risks to humans and animals. Higher value materials, such as gold and silver, are often removed from highly integrated electronics by using acids, desoldering, and other chemicals, which also release fumes in areas where recycling is not regulated properly. The negative effects on air from informal e-waste recycling are most dangerous for those who handle this waste, but the pollution can extend thousands of miles away from recycling sites'
+'The negative effects on air'
+
+'When improper disposal of e-waste in regular landfills or in places where it is dumped illegally, both heavy metals and flame retardants can seep directly from the e-waste into the soil, causing contamination of underlying groundwater or contamination of crops that may be planted near by or in the area in the future. When the soil is contaminated by heavy metals, the crops become vulnerable to absorbing these toxins, which can cause many illnesses and doesn’t allow the farmland to be as productive as possible.'
+
+'The negative effects on water'
+'After soil contamination, heavy metals from e-waste, such as mercury, lithium, lead and barium, then leak through the earth even further to reach groundwater. When these heavy metals reach groundwater, they eventually make their way into ponds, streams, rivers and lakes. Through these pathways, acidification and toxification are created in the water, which is unsafe for animals, plants and communities even if they are miles away from a recycling site. Clean drinking water becomes problematic to find.'
+'The Negative Effects on Humans'
+
+'As mentioned, electronic waste contains toxic components that are dangerous to human health, such as mercury, lead, cadmium, polybrominated flame retardants, barium and lithium. The negative health effects of these toxins on humans include brain, heart, liver, kidney and skeletal system damage. It can also considerably affect the nervous and reproductive systems of the human body, leading to disease and birth defects. Improper disposal of e-waste is unbelievably dangerous to the global environment, which is why it is so important to spread awareness on this growing problem and the threatening aftermath. To avoid these toxic effects of e-waste, it is crucial to properly e-cycle, so that items can be recycled, refurbished, resold, or reused. The growing stream of e-waste will only worsen if not educated on the correct measures of disposal.'  
+      ),
     ],
     quizzes: [
       Quiz(
-        question: 'placeholder question 1',
-        options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
-        correctAnswer: 0,
+        question: 'What is one of the main reasons why electronic waste (e-waste) must be handled with care when it is no longer wanted or needed?',
+        options: ['E-waste can often be refurbished or repaired for extended use.','E-waste contains toxic substances that can harm the environment and public health.','E-waste can break down naturally over time, causing little harm to the environment.','E-waste contains valuable materials that can be recovered through proper recycling.'],
+        correctAnswer: 1,
       ),
       Quiz(
-        question: 'placeholder question 2',
-        options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
-        correctAnswer: 0,
+        question: 'Higher value materials like gold and silver are often extracted from e-waste using safe and non-toxic methods.',
+        options: ['True', 'False'],
+        correctAnswer: 1,
+      ),
+       Quiz(
+        question: 'What is one of the main environmental risks associated with the improper disposal of e-waste in landfills or illegal dumping sites?',
+        options: ['E-waste can release large particles into the air, which quickly re-deposit and contaminate nearby soil.','Heavy metals and chemicals from e-waste can contaminate soil, affecting groundwater and crops.','E-waste improves soil quality by adding valuable metals like copper and lead back into the ground.','Burning or shredding e-waste helps break down hazardous materials, making them safe for the environment.'],
+        correctAnswer: 1,
+      ),
+       Quiz(
+        question: 'Once e-waste contamination causes acidification in water bodies, it primarily impacts large marine species, while freshwater organisms and plants remain largely unaffected.',
+        options: ['True', 'False'],
+        correctAnswer: 1,
+      ),
+            Quiz(
+        question: 'Which of the following toxic components found in electronic waste can cause damage to the human brain, heart, and kidneys?',
+        options: ['Polybrominated flame retardants', 'Sodium', 'Mercury', 'Calcium'],
+        correctAnswer: 2,
       ),
     ],
-    pointsToUnlock: (index + 2) * 20,
+    pointsToUnlock: (index + 2) * 20, //change to 20
   )),
 ];
 

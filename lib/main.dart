@@ -32,7 +32,7 @@ class EWasteApp extends StatelessWidget {
           fontWeight: FontWeight.bold,
           ),
         headlineSmall: const TextStyle( //used in questions for quiz 
-          fontSize: 28, 
+          fontSize: 20, 
           ),
         ),
       ),

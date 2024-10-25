@@ -13,10 +13,10 @@ class QuizPathScreen extends StatefulWidget {
 
   @override
   State<QuizPathScreen> createState() => _QuizPathScreenState();
+  
 }
 
 class _QuizPathScreenState extends State<QuizPathScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +74,7 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
               right: 0,
               child: Center(
                 child: Text(
-                  'Start Your Path to E-Waste Education!',
+                  'Start Your Path to E-Waste Education!', //need to change this or make it look better 
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _LevelPageState extends State<LevelPage> {
 
  Widget _buildArticleView() {
   return SingleChildScrollView(
-    padding: const EdgeInsets.all(16.0),
+    padding: const EdgeInsets.all(25.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
