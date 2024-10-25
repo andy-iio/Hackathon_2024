@@ -10,10 +10,8 @@ class QuizPathScreen extends StatefulWidget {
     required this.userPoints,
   });
 
-
   @override
   State<QuizPathScreen> createState() => _QuizPathScreenState();
-  
 }
 
 class _QuizPathScreenState extends State<QuizPathScreen> {
@@ -29,7 +27,8 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
             valueListenable: widget.userPoints,
             builder: (context, points, child) {
               return Padding(
-                padding: const EdgeInsets.all(16.0), //can change the padding to make it look better
+                padding: const EdgeInsets.all(
+                    16.0), //can change the padding to make it look better
                 child: Row(
                   children: [
                     const Icon(Icons.stars),
@@ -42,13 +41,11 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
           ),
         ],
       ),
-
-
-      body: SingleChildScrollView( //see this link: https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMJVZvPz8a-phtL-CS9-DaD-md_QColwbxbjN4N79MqFOhBFMgvm3eAaAu6pEALw_wcB&gclsrc=aw.ds
+      body: SingleChildScrollView(
+        //see this link: https://api.flutter.dev/flutter/widgets/SingleChildScrollView-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMJVZvPz8a-phtL-CS9-DaD-md_QColwbxbjN4N79MqFOhBFMgvm3eAaAu6pEALw_wcB&gclsrc=aw.ds
         child: Stack(
-          children: [ 
-                         
-            //FOR THE  BACKGROUND IMAGE 
+          children: [
+            //FOR THE  BACKGROUND IMAGE
             Positioned.fill(
               child: Image.asset(
                 'assets/images/bg.png',
@@ -61,9 +58,9 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
             //   height: 2000, //looks best on my screen at 2000 but if we test on an actual phone this probs needs to change
             //   decoration: BoxDecoration(
             //     image: DecorationImage(
-            //       image: AssetImage('assets/images/bg.png'), //we gotta change the bg image it looks kinda weird 
+            //       image: AssetImage('assets/images/bg.png'), //we gotta change the bg image it looks kinda weird
             //       repeat: ImageRepeat.repeatY,
-            //       fit: BoxFit.fitWidth, //theres other options for fit to try we can check which is best 
+            //       fit: BoxFit.fitWidth, //theres other options for fit to try we can check which is best
             //     ),
             //   ),
             // ),
@@ -74,7 +71,7 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
               right: 0,
               child: Center(
                 child: Text(
-                  'Start Your Path to E-Waste Education!', //need to change this or make it look better 
+                  'Start Your Path to E-Waste Education!', //need to change this or make it look better
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -109,8 +106,10 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
   Widget _buildLevelsPath() {
     return Stack(
       children: List.generate(levels.length, (index) {
-        final xOffset = sin(index * 0.9) * 50 + 150;  //the path of the q's, using sin for nice wavey-ness
-        final yOffset = index * 66.0 + 50; //i think using matlab and making a path based on our background is the best way to model this
+        final xOffset = sin(index * 0.9) * 50 +
+            150; //the path of the q's, using sin for nice wavey-ness
+        final yOffset = index * 66.0 +
+            50; //i think using matlab and making a path based on our background is the best way to model this
 
         return Positioned(
           left: xOffset,
@@ -130,10 +129,11 @@ class _QuizPathScreenState extends State<QuizPathScreen> {
                           levels[index].isCompleted = true;
                           //stars based on points (1 right q = 1 star) ** based on 2 q;s per level - i think we could make this dynamic so it checks how many q's in the level but im tired lol
                           levels[index].score = (points / 20 * 3).round();
-                          
+
                           //unlock next level if they have enough points
                           if (index + 1 < levels.length &&
-                              widget.userPoints.value >= levels[index + 1].pointsToUnlock) {
+                              widget.userPoints.value >=
+                                  levels[index + 1].pointsToUnlock) {
                             levels[index + 1].isUnlocked = true;
                           }
                         });
@@ -162,25 +162,30 @@ class LevelButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector( //here: https://api.flutter.dev/flutter/widgets/GestureDetector-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMLEqRmPB6iZQgKY30T_-Cl2qjqpjmC8v63wEBxuddoV8DVyvjPUzuMaAlpbEALw_wcB&gclsrc=aw.ds
+    return GestureDetector(
+      //here: https://api.flutter.dev/flutter/widgets/GestureDetector-class.html?gad_source=1&gclid=Cj0KCQjwveK4BhD4ARIsAKy6pMLEqRmPB6iZQgKY30T_-Cl2qjqpjmC8v63wEBxuddoV8DVyvjPUzuMaAlpbEALw_wcB&gclsrc=aw.ds
       onTap: onTap,
       child: Container(
         width: 60,
         height: 60,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: !level.isUnlocked ? Colors.grey : Colors.white, //when locked circle colours
+          color: !level.isUnlocked
+              ? Colors.grey
+              : Colors.white, //when locked circle colours
           border: Border.all(
-            color: level.isCompleted 
-                ? Colors.green 
-                : level.isUnlocked 
-                    ? const Color.fromARGB(255, 226, 149, 241) //unlocked but not yet completed
+            color: level.isCompleted
+                ? Colors.green
+                : level.isUnlocked
+                    ? const Color.fromARGB(
+                        255, 226, 149, 241) //unlocked but not yet completed
                     : Colors.grey.shade600,
             width: 3,
           ),
           boxShadow: [
             BoxShadow(
-              color: const Color.fromARGB(162, 255, 255, 255), //to make it stand out against the bg
+              color: const Color.fromARGB(
+                  162, 255, 255, 255), //to make it stand out against the bg
               offset: const Offset(4, 4),
               blurRadius: 6, //can be made bigger
             ),
@@ -195,11 +200,11 @@ class LevelButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: !level.isUnlocked 
+                  color: !level.isUnlocked
                       ? Colors.white
-                      : level.isCompleted 
-                          ? Colors.green 
-                          : const Color.fromARGB(255, 226, 149, 241) ,
+                      : level.isCompleted
+                          ? Colors.green
+                          : const Color.fromARGB(255, 226, 149, 241),
                 ),
               ),
               if (level.score > 0)
@@ -208,7 +213,9 @@ class LevelButton extends StatelessWidget {
                   children: List.generate(
                     3,
                     (index) => Icon(
-                      index < level.score ? Icons.star : Icons.star_border, //i love the icons so fun
+                      index < level.score
+                          ? Icons.star
+                          : Icons.star_border, //i love the icons so fun
                       size: 12,
                       color: const Color.fromARGB(255, 254, 202, 45),
                     ),
@@ -249,14 +256,15 @@ class _LevelPageState extends State<LevelPage> {
       appBar: AppBar(
         title: Text('Level ${widget.level.id}: ${widget.level.title}'),
       ),
-      body: showingQuiz 
-          ? _buildQuizView() 
-          : (selectedModuleIndex != null 
-              ? _buildModuleContent() 
+      body: showingQuiz
+          ? _buildQuizView()
+          : (selectedModuleIndex != null
+              ? _buildModuleContent()
               : _buildModulesView()),
     );
   }
-Widget _buildModulesView() {
+
+  Widget _buildModulesView() {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -282,7 +290,8 @@ Widget _buildModulesView() {
                         ? Colors.green
                         : Colors.grey,
                   ),
-                  title: Text('Module ${index + 1}: ${widget.level.modules[index].title}'),
+                  title: Text(
+                      'Module ${index + 1}: ${widget.level.modules[index].title}'),
                   onTap: () {
                     setState(() {
                       selectedModuleIndex = index;
@@ -301,11 +310,9 @@ Widget _buildModulesView() {
                     });
                   }
                 : null,
-            child: Text(
-              widget.level.allModulesCompleted
-                  ? 'Start Quiz'
-                  : 'Complete all modules to unlock quiz'
-            ),
+            child: Text(widget.level.allModulesCompleted
+                ? 'Start Quiz'
+                : 'Complete all modules to unlock quiz'),
           ),
         ],
       ),
@@ -328,6 +335,12 @@ Widget _buildModulesView() {
             module.content,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
+          const SizedBox(height: 20),
+          if (module.imagePath != null)
+            Image.asset(
+              module.imagePath!,
+              fit: BoxFit.cover,
+            ),
           const SizedBox(height: 24),
           ElevatedButton(
             onPressed: () {
@@ -376,7 +389,6 @@ Widget _buildModulesView() {
 //   );
 // }
 
-
   Widget _buildQuizView() {
     final quiz = widget.level.quizzes[currentQuizIndex];
     return Padding(
@@ -415,11 +427,15 @@ Widget _buildModulesView() {
                         });
 
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar( //cool name,, this is the little dialouge at the bottom of the screen
+                          SnackBar(
+                            //cool name,, this is the little dialouge at the bottom of the screen
                             content: Text(
-                              quiz.isCorrect ? 'Correct! +10 points' : 'Incorrect',
+                              quiz.isCorrect
+                                  ? 'Correct! +10 points'
+                                  : 'Incorrect',
                             ),
-                            duration: const Duration(seconds: 1), //go away after 1 sec
+                            duration: const Duration(
+                                seconds: 1), //go away after 1 sec
                           ),
                         );
 

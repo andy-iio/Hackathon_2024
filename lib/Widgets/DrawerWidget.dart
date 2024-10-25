@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../profile.dart';
 import '../myPickups.dart'; // Importing MyPickups page
+import '../donate.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({super.key});
@@ -113,6 +114,28 @@ class DrawerWidget extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => MyPickups(),
+                ),
+              );
+            },
+          ),
+          //donate
+          ListTile(
+            leading: const Icon(
+              Icons.volunteer_activism,
+              color: Colors.green,
+            ),
+            title: const Text(
+              "Donate",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DonationsPage(),
                 ),
               );
             },
